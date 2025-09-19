@@ -11,7 +11,6 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
-import { Tree } from './shared/components/tree/tree';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -24,7 +23,6 @@ import { HttpClient } from '@angular/common/http';
     MatSelect,
     MatOption,
     FormsModule,
-    Tree,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
