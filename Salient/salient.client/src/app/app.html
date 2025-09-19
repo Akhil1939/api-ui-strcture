@@ -1,0 +1,90 @@
+<mat-form-field [appearance]="'outline'">
+  <mat-label>Filter</mat-label>
+  <input 
+    matInput 
+    (input)="applyGlobalFilter($event)" 
+    (keyup.enter)="applyGlobalFilter($event)"
+    placeholder="Search cameras..."
+    #input>
+</mat-form-field>
+
+<mat-form-field [appearance]="'outline'">
+  <mat-label>Select manufacturer</mat-label>
+  <mat-select 
+    [(ngModel)]="manufacturerFilter" 
+    (selectionChange)="applyManufacturerFilter($event.value)">
+    <mat-option [value]="''">All Manufacturers</mat-option>
+     @for(man of manufacturers; track man){
+
+      <mat-option [value]="man">
+        {{man}}
+      </mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+
+<!-- <mat-form-field appearance="outline">
+  <mat-label>Firmware comparison</mat-label>
+  <mat-select 
+    [(ngModel)]="firmwareComparison" 
+    (selectionChange)="applyFirmwareFilter()">
+    <mat-option value="=">=</mat-option>
+    <mat-option value="<">&lt;</mat-option>
+    <mat-option value=">">&gt;</mat-option>
+    <mat-option value="<=">&lt;=</mat-option>
+    <mat-option value=">=">&gt;=</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Firmware version</mat-label>
+  <mat-select 
+    [(ngModel)]="firmwareVersion" 
+    (selectionChange)="applyFirmwareFilter()">
+    <mat-option value="">All Versions</mat-option>
+    <mat-option value="1.1">1.1</mat-option>
+    <mat-option value="2.2">2.2</mat-option>
+    <mat-option value="3.3">3.3</mat-option>
+    <mat-option value="4.1">4.1</mat-option>
+    <mat-option value="5.3">5.3</mat-option>
+    <mat-option value="6.3">6.3</mat-option>
+    <mat-option value="7.3">7.3</mat-option>
+    <mat-option value="8.3">8.3</mat-option>
+  </mat-select>
+</mat-form-field> -->
+<mat-form-field [appearance]="'outline'">
+  <mat-label>Firmware Comparison</mat-label>
+  <mat-select 
+    [(ngModel)]="firmwareComparisonFilter" 
+    (selectionChange)="applyFirmwareComparisonFilter($event.value)">
+    <mat-option [value]="''">No Filter</mat-option>
+     <mat-option value="=">=</mat-option>
+    <mat-option value="<">&lt;</mat-option>
+    <mat-option value=">">&gt;</mat-option>
+    <mat-option value="<=">&lt;=</mat-option>
+    <mat-option value=">=">&gt;=</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field [appearance]="'outline'">
+  <mat-label>Firmware Version</mat-label>
+  <mat-select 
+    [(ngModel)]="firmwareVersionFilter" 
+    (selectionChange)="applyFirmwareVersionFilter($event.value)">
+    <mat-option [value]="''">Select Version</mat-option>
+    @for(version of availableFirmwareVersions; track version){
+
+      <mat-option [value]="version">
+        {{version}}
+      </mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="warn" (click)="clearFilters()">
+  Clear All Filters
+</button>
+<app-grid [dataSource]="dataSource"></app-grid>
+
+<!-- <app-tree></app-tree> -->

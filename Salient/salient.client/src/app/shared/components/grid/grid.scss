@@ -1,0 +1,197 @@
+/* Container for the table with virtualization */
+.table-container {
+  position: relative;
+  max-height: 600px; /* Adjust based on your needs */
+  overflow: hidden;
+}
+
+.camera-grid {
+  width: 100%;
+  position: relative;
+}
+
+/* Fixed header styling */
+.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white; /* Ensure header has solid background */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: add shadow under header */
+}
+
+/* Virtual scroll viewport styling */
+.virtual-scroll-viewport {
+  height: 400px; /* Set the height for virtual scrolling area */
+  width: 100%;
+  overflow-y: auto;
+  display: block;
+}
+
+/* Ensure virtual scroll viewport works with mat-table */
+.virtual-scroll-viewport .cdk-virtual-scroll-content-wrapper {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Row styling within virtual scroll */
+.virtual-scroll-viewport .mat-mdc-row {
+  display: table-row;
+  height: 48px; /* Should match itemSize in virtual scroll viewport */
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+/* Cell styling */
+.header-cell,
+.data-cell {
+  padding: 0 16px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.header-cell {
+  font-weight: 500;
+  color: rgba(0,0,0,0.87);
+  background-color: #f5f5f5;
+}
+
+.data-cell {
+  color: rgba(0,0,0,0.87);
+}
+
+/* Status badge styling */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge .status-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.status-online {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.status-offline {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status-error {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Password field styling */
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.password-toggle {
+  width: 24px;
+  height: 24px;
+}
+
+/* Action buttons styling */
+.action-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.action-buttons button {
+  width: 32px;
+  height: 32px;
+}
+
+/* Disabled row styling */
+.row-disabled {
+  opacity: 0.6;
+  background-color: #fafafa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .virtual-scroll-viewport {
+    height: 300px;
+  }
+  
+  .table-container {
+    max-height: 400px;
+  }
+}
+
+/* Custom scrollbar for virtual scroll viewport */
+.virtual-scroll-viewport::-webkit-scrollbar {
+  width: 8px;
+}
+
+.virtual-scroll-viewport::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.virtual-scroll-viewport::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.virtual-scroll-viewport::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+/* Resizable column styles */
+.ui-column-resizer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  z-index: 1;
+  background: transparent;
+  user-select: none;
+}
+
+.ui-column-resizer:hover {
+  background-color: #e0e0e0;
+}
+
+.ui-column-resizer.resizing {
+  background-color: #2196f3 !important;
+  width: 3px;
+}
+
+.header-cell {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-cell.resizable {
+  cursor: col-resize;
+}
+
+.header-cell.resizable:hover .ui-column-resizer {
+  background-color: #e0e0e0;
+}
+
+/* Ensure table layout supports resizing */
+.camera-grid {
+  table-layout: auto;
+  width: 100%;
+}
+
+/* Prevent text selection during resize */
+.ui-column-resizer::-moz-selection,
+.ui-column-resizer::selection {
+  background: transparent;
+}

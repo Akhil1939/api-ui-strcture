@@ -1,0 +1,135 @@
+
+
+<div class="mat-elevation-z8">
+  <table #table mat-table [dataSource]="dataSource()" matSort class="camera-grid">
+
+    @for(column of columns; track column) {
+        <ng-container [matColumnDef]="column.property">
+            @if(column.sortable) {
+                <th mat-header-cell *matHeaderCellDef 
+                    mat-sort-header 
+                    [style.width]="column.fixedWidth"
+                    [style.min-width]="column.fixedWidth"
+                    [style.max-width]="column.fixedWidth"
+                    class="header-cell"
+                    [class]="column.headerClass || ''"
+                    [class.resizable]="column.resizable ?? true">
+                    @if (column.resizable ?? true) {
+
+                      <span class="ui-column-resizer" 
+                      resizableColumn
+                      [attr.data-column]="column.property">
+                    </span>
+                  }
+                    {{column.label}}
+                </th>
+            } @else {
+                <th mat-header-cell *matHeaderCellDef 
+                    [style.width]="column.fixedWidth"
+                    [style.min-width]="column.fixedWidth"
+                    [style.max-width]="column.fixedWidth"
+                    class="header-cell"
+                    [class]="column.headerClass || ''"[class.resizable]="column.resizable ?? true">
+                    @if (column.resizable ?? true) {
+
+                      <span class="ui-column-resizer" 
+                      resizableColumn
+                      [attr.data-column]="column.property">
+                    </span>
+                  }
+                    {{column.label}}
+                </th>
+            }
+            <th mat-header-cell *matHeaderCellDef 
+                mat-sort-header 
+                [style.width]="column.fixedWidth"
+                [style.min-width]="column.fixedWidth"
+                [style.max-width]="column.fixedWidth"
+                class="header-cell"
+                [class]="column.headerClass || ''">
+                {{column.label}}
+            </th>
+            
+            <td mat-cell *matCellDef="let row" 
+                [style.width]="column.fixedWidth"
+                [style.min-width]="column.fixedWidth"
+                [style.max-width]="column.fixedWidth"
+                class="data-cell"
+                [class]="column.cellClass || ''">
+                
+                @switch (column.type) {
+                  @case ('checkbox') {
+                    <mat-checkbox 
+                      [checked]="row[column.property]" 
+                      (change)="onCheckboxChange(row, column.property, $event.checked)"
+                      [disabled]="column.disabled">
+                    </mat-checkbox>
+                  }
+                  @case ('password') {
+                    <div class="password-field">
+                      <span [class.password-hidden]="!column.showPassword">
+                        {{column.showPassword ? row[column.property] : '••••••••'}}
+                      </span>
+                      <button mat-icon-button 
+                              (click)="togglePasswordVisibility(column)"
+                              class="password-toggle">
+                        <mat-icon>{{column.showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                    </div>
+                  }
+                  @case ('status') {
+                    <span class="status-badge" [class]="'status-' + row[column.property]">
+                      <mat-icon class="status-icon">{{getStatusIcon(row[column.property])}}</mat-icon>
+                      {{row[column.property] | titlecase}}
+                    </span>
+                  }
+                  @case ('date') {
+                    <span class="date-cell">{{row[column.property] | date:'short'}}</span>
+                  }
+                  @case ('number') {
+                    <span class="number-cell">{{row[column.property]}}{{column.unit || ''}}</span>
+                  }
+                  @case ('action') {
+                    <div class="action-buttons">
+                      @for(action of column.actions; track action.name) {
+                        <button mat-icon-button 
+                                [matTooltip]="action.tooltip"
+                                (click)="onAction(action.name, row)"
+                                [class]="action.class || ''"
+                                [disabled]="action.disabled && action.disabled(row)">
+                          <mat-icon>{{action.icon}}</mat-icon>
+                        </button>
+                      }
+                    </div>
+                  }
+                  @default {
+                    <span [class]="'text-cell ' + (column.cellClass || '')">
+                      {{row[column.property]}}
+                    </span>
+                  }
+                }
+            </td>
+        </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+        [class.row-disabled]="!row.enabled"
+        (click)="onRowClick(row)"></tr>
+
+  </table>
+
+</div>
+
+ <!-- Radio Type -->
+                <!-- @else if (column.type === 'radio') {
+                    <mat-radio-group 
+                        [value]="row[column.property]" 
+                        (change)="onRadioChange(row, column.property, $event.value)">
+                        @for(option of column.options; track option.value) {
+                            <mat-radio-button [value]="option.value" class="radio-option">
+                                {{option.label}}
+                            </mat-radio-button>
+                        }
+                    </mat-radio-group>
+                } -->
